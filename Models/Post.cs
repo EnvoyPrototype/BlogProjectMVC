@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BlogProjectMVC.Enums;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,7 +35,7 @@ namespace BlogProjectMVC.Models
         [Display(Name = "Updated Date")]
         public DateTime? Updated { get; set; }
 
-        public bool IsReady { get; set; }
+        public ReadyStatus ReadyStatus { get; set; }
 
         public string Slug { get; set; }
 
@@ -42,5 +44,11 @@ namespace BlogProjectMVC.Models
 
         [NotMapped]
         public IFormFile Image { get; set; }
+
+        //Navigation Property
+        public virtual Blog Blog { get; set; }
+        public virtual IdentityUser Author { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
     }
 }
