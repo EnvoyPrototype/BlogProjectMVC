@@ -40,6 +40,7 @@ namespace BlogProjectMVC.Models
         public IFormFile Image { get; set; }
 
         //Navigation Property
+        [Display(Name = "Author")]
         public virtual BlogUser BlogUser { get; set; }
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
 
