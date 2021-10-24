@@ -20,24 +20,24 @@ namespace BlogProjectMVC.Controllers
         }
 
         // GET: Tags/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var tag = await _context.Tags
-                .Include(t => t.BlogUser)
-                .Include(t => t.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
+        //    var tag = await _context.Tags
+        //        .Include(t => t.BlogUser)
+        //        .Include(t => t.Post)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (tag == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(tag);
-        }
+        //    return View(tag);
+        //}
 
         // GET: Tags/Create
         //public IActionResult Create()
