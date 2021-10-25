@@ -1,6 +1,7 @@
 using BlogProjectMVC.Data;
 using BlogProjectMVC.Models;
 using BlogProjectMVC.Services;
+using BlogProjectMVC.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,6 +50,10 @@ namespace BlogProjectMVC
 
             // Register custom DataService class
             services.AddScoped<DataService>();
+
+            // Register a preconfigured instance of the MailSettings class
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<IBlogEmailSender, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
