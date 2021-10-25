@@ -1,5 +1,6 @@
 using BlogProjectMVC.Data;
 using BlogProjectMVC.Models;
+using BlogProjectMVC.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,10 +29,7 @@ namespace BlogProjectMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -48,6 +46,9 @@ namespace BlogProjectMVC
             services.AddControllersWithViews();
             
             services.AddRazorPages();
+
+            // Register custom DataService class
+            services.AddScoped<DataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
