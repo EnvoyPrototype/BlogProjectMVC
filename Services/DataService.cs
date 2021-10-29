@@ -73,7 +73,7 @@ namespace BlogProjectMVC.Services
             // 3) Add this new user to administrator role
             await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
 
-            // Moderator user
+            // Repeat process for moderator user
             var modUser = new BlogUser()
             {
                 Email = "jimrogers3315@gmail.com",
