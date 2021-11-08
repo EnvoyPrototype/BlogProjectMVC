@@ -9,6 +9,7 @@ using BlogProjectMVC.Data;
 using BlogProjectMVC.Models;
 using BlogProjectMVC.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogProjectMVC.Controllers
 {
@@ -17,12 +18,14 @@ namespace BlogProjectMVC.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ISlugService _slugService;
         private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
 
-        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService)
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService, UserManager<BlogUser> userManager)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
+            _userManager = userManager;
         }
 
         // GET: Posts
@@ -71,6 +74,9 @@ namespace BlogProjectMVC.Controllers
             {
                 post.Created = DateTime.Now;
 
+                var authorId = _userManager.GetUserId(User);
+                post.BlogUserId = authorId;
+
                 // User _imageService to store incoming user-specified image
                 post.ImageData = await _imageService.EncodeImageAsync(post.Image);
                 post.ContentType = _imageService.ContentType(post.Image);
@@ -89,6 +95,20 @@ namespace BlogProjectMVC.Controllers
 
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+
+                // Loop over incoming list of string
+                foreach (var tagText in tagValues)
+                {
+                    _context.Add(new Tag()
+                    {
+                        PostId = post.Id,
+                        BlogUserId = authorId,
+                        Text = tagText
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
