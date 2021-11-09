@@ -23,10 +23,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col text-center">
             @foreach(var tag in Model.Tags)
             {
-                <a asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a>
+                <a class="btn btn-warning btn-sm btn-outline-dark" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a>
             }
         </div>
     </div>
