@@ -33,7 +33,7 @@ $("form").on("submit", function () {
 })
 
 // Look for tagValues variable to see if it has data
-if (tagValues != '') {
+if (tagValues != "") {
     let tagArray = tagValues.split(",");
     for (let loop = 0; loop < tagArray.length; loop++) {
         // Load or replace current options
@@ -44,5 +44,5 @@ if (tagValues != '') {
 
 function ReplaceTag(tag, index) {
     let newOption = new Option(tag, tag);
-    document.getElementById("TagList").options[Index] = newOption;
+    document.getElementById("TagList").options[index] = newOption;
 }
