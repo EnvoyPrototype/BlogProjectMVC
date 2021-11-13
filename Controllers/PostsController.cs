@@ -94,10 +94,19 @@ namespace BlogProjectMVC.Controllers
                     ModelState.AddModelError("", "The title you provided cannot be used as it results in an empty slug");
                 }
 
-                if (!_slugService.IsUnique(slug))
+                else if (!_slugService.IsUnique(slug))
                 {
                     validationError = true;
                     ModelState.AddModelError("Title", "The title you provided cannot be used as it results in a duplicate slug");
+                }
+
+                // Custom model error
+                else if (slug.Contains("test"))
+                {
+                    validationError = true;
+                    ModelState.AddModelError("", "Uh-oh are you testing again?");
+                    ModelState.AddModelError("Title", "The title you provided cannot contain the word test");
+                    
                 }
 
                 if (validationError)
