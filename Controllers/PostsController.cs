@@ -10,6 +10,8 @@ using BlogProjectMVC.Models;
 using BlogProjectMVC.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using BlogProjectMVC.Enums;
+using X.PagedList;
 
 namespace BlogProjectMVC.Controllers
 {
@@ -36,16 +38,25 @@ namespace BlogProjectMVC.Controllers
         }
 
         // BlogPostIndex
-        public async Task<IActionResult> BlogPostIndex(int? id)
+        public async Task<IActionResult> BlogPostIndex(int? id, int? page)
         {
             if (id is null)
             {
                 return NotFound();
             }
 
-            var posts = _context.Posts.Where(p => p.BlogId == id);
+            var pageNumber = page ?? 1;
+            
+            // Set in appsettings.json? 
+            var pageSize = 5;
 
-            return View("Index", posts);
+            //var posts = _context.Posts.Where(p => p.BlogId == id).ToList();
+            var posts = await _context.Posts
+                .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(posts);
 
         }
 
