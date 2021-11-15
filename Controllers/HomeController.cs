@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BlogProjectMVC.Controllers
 {
@@ -26,17 +27,24 @@ namespace BlogProjectMVC.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var blogs = await _context.Blogs
+            var pageNumber = page ?? 1;
+            
+            // Possibly move to config file
+            var pageSize = 5;
+
+            //var blogs = _context.Blogs.Where(
+            //    b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
+            //    .OrderByDescending(b => b.Created)
+            //    .ToPagedListAsync(pageNumber, pageSize);
+
+            var blogs = _context.Blogs
                 .Include(b => b.BlogUser)
-                .ToListAsync();
+                .OrderByDescending(b => b.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
-
-
-
-
-            return View(blogs);
+            return View(await blogs);
         }
 
         public IActionResult About()
