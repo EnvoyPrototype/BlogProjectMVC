@@ -1,6 +1,9 @@
-﻿@using BlogProjectMVC.Services 
+﻿@using Microsoft.AspNetCore.Identity
+@using BlogProjectMVC.Services 
+
 @model BlogProjectMVC.Models.Post
 
+@inject UserManager<BlogUser> userManager
 @inject IImageService imageService
 @{
     ViewData["Title"] = "Details";
@@ -18,6 +21,7 @@
 </article>
 
 <hr />
+
 <article>
     <div class="row">
         <div class="col text-center font-weight-bold h3">
@@ -33,6 +37,7 @@
         </div>
     </div>
 </article>
+
 <hr />
 
 <div>
@@ -57,7 +62,7 @@
 
 <hr />
 
-<span class="btn btn-sm btn-dark btn-block">@Model.Comments.Count COMMENT(S)</span>
+<button id="commentSection" class="btn btn-sm btn-dark btn-block">@Model.Comments.Count COMMENT(S)</button>
 
 @foreach (var comment in Model.Comments)
             {
@@ -67,6 +72,43 @@
                         <h4>@comment.BlogUser.FullName</h4>
                         <small><i>Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
                         <p>@comment.Body</p>
+
+                        @if (comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
+                        {
+                            <hr />
+                            <button data-bs-toggle="modal" data-bs-target="#editModal" class="btn-sm btn-dark float-right font-weight-bold">EDIT</button>
+                        }
+
                     </div>
                 </div>
+
+                @*Modals*@
+    <div class="modal" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editing Comment...</h4>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form asp-action="Edit" asp-controller="Comments">
+                        @Html.Hidden("Id", comment.Id)
+
+                        <div class="form-group">
+                            <textarea name="Body" class="form-control" required>@comment.Body</textarea>
+                        </div>
+
+                        <button class="btn-sm btn-dark border-success font-weight-bold" type="submit">SUBMIT</button>
+                    </form>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-dark font-weight-bold" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
             }
