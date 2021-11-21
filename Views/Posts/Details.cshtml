@@ -1,5 +1,7 @@
-﻿@model BlogProjectMVC.Models.Post
+﻿@using BlogProjectMVC.Services 
+@model BlogProjectMVC.Models.Post
 
+@inject IImageService imageService
 @{
     ViewData["Title"] = "Details";
 }
@@ -33,5 +35,38 @@
 </article>
 <hr />
 
-<!-- Displaying Comments Related To This Post-->
-<!-- Display Image Of Comment's Author -->
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="Create" asp-controller="Comments" method="post">
+            @Html.Hidden("PostId", Model.Id)
+
+            <div class="form-group">
+                <label class="h2 control-label font-weight-bold">Add Comment</label>
+                <textarea name="body" class="form-control" rows="10"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-block btn-sm">Submit</button>
+        </form>
+    } 
+    else
+    {
+        <a class="btn btn-block btn-sm btn-dark" asp-area="Identity" asp-page="/Account/Login">Log in to add comments</a>
+    }
+</div>
+
+<hr />
+
+<span class="btn btn-sm btn-dark btn-block">@Model.Comments.Count COMMENT(S)</span>
+
+@foreach (var comment in Model.Comments)
+            {
+                <div class="media media-border p-0 mb-2 bg-light">
+                    <img class="mr-3 mt-3 rounded-circle" style="width:60px;" src="@imageService.DecodeImage(comment.BlogUser.ImageData, comment.BlogUser.ContentType)" />
+                    <div class="media-body">
+                        <h4>@comment.BlogUser.FullName</h4>
+                        <small><i>Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
+                        <p>@comment.Body</p>
+                    </div>
+                </div>
+            }
