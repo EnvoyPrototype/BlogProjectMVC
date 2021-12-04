@@ -1,13 +1,180 @@
+/* NAVIGATION */
+.nav {
+    display: inline-block;
+}
+
+#navbarResponsive > ul:nth-child(2) > li:nth-child(2) > form > button {
+    line-height: 1.5;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    list-style: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: all .2s;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    color: rgba(255,255,255,.8);
+}
+
+.nav-identity {
+    padding-top: 18px !important;
+}
+
+/* CUSTOM MEDIA OBJECT BORDER */
+.media-border {
+    border: 2px solid black;
+}
+
+/* CUSTOM BG COLOR */
+.bg-cf {
+    background: rgb(255,153,59,.35);
+}
+
+/* APP WIDE FONT WEIGHT */
+header.masthead .page-heading .subheading,
+header.masthead .site-heading .subheading,
+select, input, textarea, option, label, tooltip-inner {
+    font-weight: 600;
+}
+
+/* GENERAL PADDING */
+header.masthead .page-heading,
+header.masthead .post-heading,
+header.masthead .site-heading {
+    padding: 100px 0 100px 0;
+}
+
+/* GOOGLE MAP */
+#map {
+    height: 400px;
+}
+
+.noline { 
+    text-decoration: none;
+}
+
+/* SUMMERNOTE */
+.note-editable, .note-placeholder {
+    font-size: 22px;
+}
+
+/* BUTTON STYLES */
+.btn-tag {
+    margin-top: 10px;
+}
+
+.btnWide, .btn-tag {
+    width: 100%;
+}
+
 button.btn-sm, a.btn-sm {
     line-height: .5;
     border-radius: 10px;
 }
 
-option {
-    font-weight: bolder;
+.btn-dark:hover {
+    border: 4px solid #ff993b;
 }
 
-div.swal2-container.swal2-center.swal2-backdrop-show > div {
+.btn-warning {
+    color: #212121;
+    background-color: #ff993b;
+    border-color: #ff993b;
+}
+
+.btn-warning:hover {
+    color: white;
+    background-color: #212121;
+    outline: 4px solid #ff993b;
+}
+
+/* CARD STYLES */
+.card-hr {
+    color: #212121;
+    background-color: #212121;
+    height: 3px;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-img, .card-img-top, .card-img-bottom {
+    height: 150px;
+}
+
+/* PAGE STYLES */
+.page-item.active .page-link {
+    background-color: #212121;
+    border-color: black;
+}
+
+.page-link {
+    color: #212121;
+}
+
+/* SWEET ALERT STYLES */
+.div.swal2-container.swal2-center.swal2-backdrop-show > div {
     outline: 4px solid black;
     border: 2px solid #ff993b;
+}
+
+/* TOOLTIP STYLES */
+.cftooltip * {
+    opacity: 1.0 !important;
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: black;
+    text-align: center;
+    background-color: blanchedalmond;
+    border-radius: .25rem;
+    border: 2px solid #ff993b;
+    outline: 4px solid black;
+}
+
+.tooltip.show {
+    opacity: 1;
+}
+
+/* TAGS */
+#TagList {
+    width: 100px;
+    font-weight: 600;
+}
+
+.tagView {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+/* WEBKIT SCROLLBAR STYLES */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #ff993b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #212121;
+    border-radius: 10px;
 }
